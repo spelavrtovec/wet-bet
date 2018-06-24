@@ -2,15 +2,16 @@
 {{!-- <p> Welcome to {{ title }}. </p> --}}
 <nav>
   <ul>
-      <h1>Are you sure you want to sign up for another webpage? You might regret it. You might never be able to log out again…</h1>
+      <h1>Are you sure you want to sign up for another webpage?<br> You might regret it. <br> You might never be able to log out again…</h1>
+<br>
       <form action="/auth/signup" method="POST" id="form-container">
-        <label for="username">Username : </label>
+        <label for="username">Username: </label>
         <input id="username" type="text" name="username" placeholder="We're letting you put in your name yourself, so it seems like we don't already know it">
-        <br><br>
-        <label for="email">E-mail : </label>
+        <br>
+        <label for="email">E-mail: </label>
         <input id="email" type="text" name="email" placeholder="Your e-mail goes here">
-        <br><br>
-        <label for="password">Password : </label>
+        <br>
+        <label for="password">Password: </label>
         <input id="password" type="password" name="password" placeholder="And your password here">
         <br><br>
         {{!-- {{#if message }}
