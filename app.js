@@ -58,11 +58,6 @@ hbs.registerHelper('ifUndefined', (value, options) => {
       return options.fn(this);
   }
 });
-  
-
-// default value for title local
-app.locals.title = 'Express - Generated with IronGenerator';
-
 
 // Enable authentication using session + passport
 app.use(session({
