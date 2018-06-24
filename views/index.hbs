@@ -1,16 +1,6 @@
 <p> Welcome to {{ title }}. </p>
-
-{{#if isUserLoggedIn { }}
-  <p> Hello, {{ currentUserInfo.name }}. </p>
-{{/if}}
-
 <nav>
   <ul>
-    {{#if isUserLoggedIn { }}
-     <li> <a href="/launderers"> Find a Launderer </a> </li>
-      <li> <a href="/dashboard"> See Dashboard </a> </li>
-      <li> <a href="/logout"> Log Out </a> </li>
-    {{else}}
       <h1>Are you sure you want to sign up for another webpage? You might regret it. You might never be able to log out again…</h1>
       <form action="/auth/signup" method="POST" id="form-container">
         <label for="username">Username</label>
@@ -29,6 +19,5 @@
           <a href="/auth/login">Login</a>
         </p> --}}
       </form>
-    {{/if}}
   </ul>
 </nav>
