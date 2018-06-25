@@ -1,6 +1,7 @@
 @import url('https://fonts.googleapis.com/css?family=Lato:300');
 
 @media (max-width: 600px) {
+  
   html {
     font-size: 8px;
   }
@@ -9,7 +10,6 @@
     font-family: 'Lato', sans-serif;
     color: black;
   }
-
 
   #form-container {
     display: flex;
