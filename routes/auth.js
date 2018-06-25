@@ -4,23 +4,23 @@ const authRoutes = express.Router();
 const nodemailer = require('nodemailer');
 const User = require("../models/User");
 
-require("dotenv").config(); //what is this?
+require("dotenv").config(); 
 
 // Bcrypt to encrypt passwords
 const bcrypt = require("bcrypt");
 const bcryptSalt = 10;
 
 
-// authRoutes.get("/login", (req, res, next) => {
-//   res.render("auth/login", { "message": req.flash("error") });
-// });
+authRoutes.get("/login", (req, res, next) => {
+  res.render("auth/login", { "message": req.flash("error") });
+});
 
-// authRoutes.post("/login", passport.authenticate("local", {
-//   successRedirect: "/",
-//   failureRedirect: "/auth/login",
-//   failureFlash: true,
-//   passReqToCallback: true
-// }));
+authRoutes.post("/login", passport.authenticate("local", {
+  successRedirect: "/",
+  failureRedirect: "/auth/login",
+  failureFlash: true,
+  passReqToCallback: true
+}));
 
 authRoutes.get("/signup", (req, res, next) => {
   res.render("auth/signup");
@@ -41,13 +41,21 @@ authRoutes.post("/signup", (req, res, next) => {
   //if the username already exists
   User.findOne({ username }, "username", (err, user) => {
     if (user !== null) {
-      res.render("auth/signup", { message: "We already have this person inside our system." });
+      res.render("auth/signup", { message: "This person is already a registered weather enthusiast." });
       return;
+  }
+
+  //this cleans the hash from the slashes.
+  function deleteSlashFromString(string) {
+    return string
+   .split("")
+   .filter(elem => elem !== "/")
+   .join("");
   }
 
   const salt = bcrypt.genSaltSync(bcryptSalt);
   const hashPass = bcrypt.hashSync(password, salt);
-  const hashConfirmation = bcrypt.hashSync(username, salt);
+  const hashConfirmation = deleteSlashFromString(bcrypt.hashSync(username, salt)); //and here we put the hash in, and use the "slash cleaner"-function. When we get the email, we avoid problems with slashes in links
 
   const newUser = new User({
       username,
@@ -67,16 +75,17 @@ authRoutes.post("/signup", (req, res, next) => {
         service: 'Gmail',
         auth: {
           user: process.env.GMAIL_EMAIL,
-          pass: process.env.GMAIL_PASSWORD,
+          pass: process.env.GMAIL_PASSWORD
         }
       });
 
       transporter.sendMail({
-        from: `"You just got yourself in some serious stuff" ${process.env.GMAIL_EMAIL}`,
+        from: `"/" ${process.env.GMAIL_EMAIL}`,
         to: email, 
-        subject: "!!!!!!!!", 
+        subject: "The confirmation e-mail", 
         html: `Click on this link: http://localhost:3000/auth/confirm/${hashConfirmation}`
       })
+      console.log(email);
       res.redirect("/");
     }
   });
@@ -88,8 +97,8 @@ authRoutes.get("/confirm/:hashConfirmation", (req, res) => {
   User.findOne({ confirmation: req.params.hashConfirmation })
     .then (user => {
       User.findOneAndUpdate (user._id, { status: "Active"})
-      .then (updatedUser => { //I'm not really sure about this part?
-        res.render("auth/confirmation");
+      .then (updatedUser => { 
+        res.render("confirmation");
       });
     })
     .catch (err => {

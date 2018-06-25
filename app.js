@@ -16,7 +16,7 @@ const flash      = require("connect-flash");
 
 mongoose.Promise = Promise;
 mongoose
-  .connect('mongodb://localhost/lab-nodemailer', {useMongoClient: true})
+  .connect('mongodb://localhost/big-data', {useMongoClient: true})
   .then(() => {
     console.log('Connected to Mongo!')
   }).catch(err => {
