@@ -1,25 +1,2 @@
-@import url('https://fonts.googleapis.com/css?family=Lato:300');
 
-@media (max-width: 600px) {
-  
-  html {
-    font-size: 8px;
-  }
-
-  body {
-    font-family: 'Lato', sans-serif;
-    color: black;
-  }
-
-  #form-container {
-    display: flex;
-    justify-content: center;
-    flex-direction: column;
-  }
-
-  ul {
-    padding: 0;
-  }
-
-}
 /*# sourceMappingURL=style.css.map */
