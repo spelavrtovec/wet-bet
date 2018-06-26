@@ -1,25 +1,24 @@
-<form method="POST" id="form-container">
+<form action="/betting/day-and-place" method="POST" id="form-container">
   
   <label for="day">Day:</label>
-  <input type="date" id="date" value="setTodaysDate" min="{{date}}"/>
+  <input type="date" name="date" id="date" min="{{date}}"/>
   
   <br><br>
 
   <label for="place">Place:</label>
-  <select>
-    <option value="tokio">Tokio</option>
-    <option value="paris">Paris</option>
-    <option value="berlin">Berlin</option>
-    <option value="oslo">Oslo</option>
-    <option value="ljubljana">Ljubljana</option>
+  <select id="city" name="city"> 
+    <option id="tokyo" name="tokyo" value="1850147">Tokyo</option>
+    <option id="paris" name="paris" value="6455259">Paris</option>
+    <option id="berlin" name="berlin" value="2950159">Berlin</option>
+    <option id="oslo" name="oslo" value="6453366">Oslo</option>
+    <option id="ljubljana" name="ljubljana" value="3196359">Ljubljana</option>
   </select>
 
   <br><br>
 
   <label for="temperature">Temperature in CELSIUS:</label>
-  <input id="temperature" type="number" name="temperature" placeholder="Put in a number">
+  <input id="temperature" type="number" id="temperature" name="temperature" placeholder="Put in a number">
 
   <br><br>
-
-  <button>Place bets</button>
+  <button type="submit" class="btn btn-light">Place a bet</button>
 </form>

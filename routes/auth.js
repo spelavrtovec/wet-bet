@@ -21,17 +21,16 @@ const bcryptSalt = 10;
 //   passReqToCallback: true
 // }));
 
-console.log("CONSOLE LOG 2")
+
 
 authRoutes.get("/signup", (req, res, next) => {
-  console.log("inside GETTTTTTTTTTTTTTTTTTTTTTT")
+
   res.render("auth/signup", {
     errorMessage: "ftyghujoklp"
   });
 })
-console.log("bEFOREEEEEEEEEEEEE")
+
 authRoutes.post("/signup", (req, res, next) => {
-  console.log("inside POSSTTTTTTTTTTTTTTTTTTTTTTTTTTT")
 
   const username = req.body.username;
   const email = req.body.email;
