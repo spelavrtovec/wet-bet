@@ -2,12 +2,12 @@
 <h2>Login</h2>
 
 <form action="/auth/login" method="POST" id="form-container">
-  <label for="email">Email</label>
+  <label for="email">Email:</label>
   <input id="email" type="text" name="email" placeholder="Your email">
 
   <br><br>
 
-  <label for="password">Password</label>
+  <label for="password">Password:</label>
   <input id="password" type="password" name="password" placeholder="Your password">
   <br>
   {{#if message }}
@@ -15,11 +15,10 @@
   {{/if}}
 
   <br><br>
-
-  <button>Login</button>
-
-  <p class="account-message">
-    Don't have an account yet?
-    <a href="/auth/signup">Signup</a>
+  <button class="btn btn-light">Login</button>
+  <br>
+   <p class="account-message small">
+  Don't have an account yet?<br>
+  <a href="/auth/signup">Signup</a>
   </p>
 </form>
