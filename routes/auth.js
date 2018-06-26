@@ -21,14 +21,18 @@ const bcryptSalt = 10;
 //   passReqToCallback: true
 // }));
 
+console.log("CONSOLE LOG 2")
 
 authRoutes.get("/signup", (req, res, next) => {
+  console.log("inside GETTTTTTTTTTTTTTTTTTTTTTT")
   res.render("auth/signup", {
-    errorMessage: ""
+    errorMessage: "ftyghujoklp"
   });
-});
-
+})
+console.log("bEFOREEEEEEEEEEEEE")
 authRoutes.post("/signup", (req, res, next) => {
+  console.log("inside POSSTTTTTTTTTTTTTTTTTTTTTTTTTTT")
+
   const username = req.body.username;
   const email = req.body.email;
   const password = req.body.password;
@@ -41,7 +45,7 @@ authRoutes.post("/signup", (req, res, next) => {
     });
     return;
   }
-
+  console.log("CONSOLE LOG 3")
   //if the username already exists
   User.findOne({
     username
@@ -60,7 +64,7 @@ authRoutes.post("/signup", (req, res, next) => {
         .filter(elem => elem !== "/")
         .join("");
     }
-
+    console.log("CONSOLE LOG 4")
     const salt = bcrypt.genSaltSync(bcryptSalt);
     const hashPass = bcrypt.hashSync(password, salt);
     const hashConfirmation = deleteSlashFromString(bcrypt.hashSync(username, salt)); //and here we put the hash in, and use the "slash cleaner"-function. When we get the email, we avoid problems with slashes in links
