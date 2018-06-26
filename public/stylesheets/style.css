@@ -1,2 +1,10 @@
 
 /*# sourceMappingURL=style.css.map */
+
+.small {
+  font-size: 0.7em;
+}
+
+#signup {
+  padding: 10px;
+}
