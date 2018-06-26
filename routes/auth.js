@@ -1,3 +1,5 @@
+/* jshint esversion: 6 */
+
 const express = require("express");
 const passport = require('passport');
 const authRoutes = express.Router();
@@ -73,10 +75,10 @@ authRoutes.post("/signup", (req, res, next) => {
 
     newUser.save((err) => {
       if (err) {
-        console.log(err)
+        console.log(err);
         res.render("auth/signup", {
           message: "Something went horribly wrong."
-        })
+        });
 
       } else { //the transporter thingie
         let transporter = nodemailer.createTransport({
@@ -92,7 +94,7 @@ authRoutes.post("/signup", (req, res, next) => {
           to: email,
           subject: "The confirmation e-mail",
           html: `Click on this link: http://localhost:3000/auth/confirm/${hashConfirmation}`
-        })
+        });
         console.log(email);
         res.redirect("/");
       }
@@ -182,18 +184,34 @@ authRoutes.get("/confirm/:hashConfirmation", (req, res) => {
           status: "Active"
         })
         .then(updatedUser => {
-          res.render("auth/login");
+          res.redirect("/auth/login"); //confirmation links takes user here
         });
     })
     .catch(err => {
       console.log(err);
-      res.redirect("/")
+      res.redirect("/");
     });
 });
 
-// authRoutes.get("/logout", (req, res) => {
-//   req.logout();
-//   res.redirect("/");
-// });
+
+
+
+
+
+authRoutes.get('/logout', (req, res, next) => {
+  if (!req.session.currentUser) {
+    res.redirect('/');
+    return;
+  }
+
+  req.session.destroy((err) => {
+    if (err) {
+      next(err);
+      return;
+    }
+
+    res.redirect('/');
+  });
+});
 
 module.exports = authRoutes;

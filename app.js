@@ -1,3 +1,4 @@
+/* jshint esversion: 6 */
 require('dotenv').config();
 
 const bodyParser   = require('body-parser');
@@ -18,9 +19,9 @@ mongoose.Promise = Promise;
 mongoose
   .connect('mongodb://localhost/big-data', {useMongoClient: true})
   .then(() => {
-    console.log('Connected to Mongo!')
+    console.log('Connected to Mongo!');
   }).catch(err => {
-    console.error('Error connecting to mongo', err)
+    console.error('Error connecting to mongo', err);
 });
 
 const app_name = require('./package.json').name;
@@ -87,7 +88,7 @@ app.use((req, res, next) => {
     currentUserInfo: the user’s information from the session (only available if logged in)
 */
 
-
+app.use(flash());
 
 
 app.use(flash()); //what is this?
