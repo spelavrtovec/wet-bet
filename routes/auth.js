@@ -22,8 +22,10 @@ authRoutes.post("/login", passport.authenticate("local", {
   passReqToCallback: true
 }));
 
+
 authRoutes.get("/signup", (req, res, next) => {
-  res.render("auth/signup");
+  res.render("auth/signup", {
+    errorMessage: ""});
 });
 
 authRoutes.post("/signup", (req, res, next) => {
@@ -98,7 +100,7 @@ authRoutes.get("/confirm/:hashConfirmation", (req, res) => {
     .then (user => {
       User.findOneAndUpdate (user._id, { status: "Active"})
       .then (updatedUser => { 
-        res.render("auth/front-page");
+        res.render("auth/login");
       });
     })
     .catch (err => {
