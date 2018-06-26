@@ -98,7 +98,7 @@ authRoutes.get("/confirm/:hashConfirmation", (req, res) => {
     .then (user => {
       User.findOneAndUpdate (user._id, { status: "Active"})
       .then (updatedUser => { 
-        res.render("confirmation");
+        res.render("auth/front-page");
       });
     })
     .catch (err => {

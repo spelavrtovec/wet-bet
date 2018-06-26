@@ -52,18 +52,18 @@ mongoose.connect(`mongodb://localhost/${databaseName}`);
 // ];
 
 const users = [
-  {
-    username: "spelala",
-    password: "areallynicepass",
-    email: "spela@vrtovec.net",
-    status: "Active",
-    // confirmation: { type: String, unique: true },
-    timestamps: {
-      createdAt: 'created_at',
-      updatedAt: 'updated_at'
-    },
-    weatherPoints: 3000
-  },
+  // {
+  //   username: "spelala",
+  //   password: "areallynicepass",
+  //   email: "spela@vrtovec.net",
+  //   status: "Active",
+  //   // confirmation: { type: String, unique: true },
+  //   timestamps: {
+  //     createdAt: 'created_at',
+  //     updatedAt: 'updated_at'
+  //   },
+  //   weatherPoints: 3000
+  // },
 
   {
     username: "larssss",
