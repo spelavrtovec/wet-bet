@@ -1,16 +1,22 @@
 <form method="POST" id="form-container">
   
-  <label for="day">Day</label>
-  <input id="day" type="dropdown" name="day" placeholder="Choose a day">
+  <label for="day">Day:</label>
+  <input type="date" id="date" value="setTodaysDate"/>
   
   <br><br>
 
-  <label for="place">Place</label>
-  <input id="place" type="dropdown" name="place" placeholder="Choose a city">
+  <label for="place">Place:</label>
+  <select>
+    <option value="tokio">Tokio</option>
+    <option value="paris">Paris</option>
+    <option value="berlin">Berlin</option>
+    <option value="oslo">Oslo</option>
+    <option value="ljubljana">Ljubljana</option>
+  </select>
 
   <br><br>
 
-  <label for="temperature">Temperature</label>
+  <label for="temperature">Temperature in CELSIUS:</label>
   <input id="temperature" type="number" name="temperature" placeholder="Put in a number">
 
   <br><br>
