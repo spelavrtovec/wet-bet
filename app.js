@@ -61,13 +61,36 @@ hbs.registerHelper('ifUndefined', (value, options) => {
 
 // Enable authentication using session + passport
 app.use(session({
-  secret: 'irongenerator',
+  secret: 'Spela and Lars',
   resave: true,
   saveUninitialized: true,
-  store: new MongoStore( { mongooseConnection: mongoose.connection })
-}))
-app.use(flash());
-require('./passport')(app);
+  cookie: { maxAge: 600000 }, //10 min of session
+  store: new MongoStore({ 
+    mongooseConnection: mongoose.connection,
+    ttl: 24 * 60 * 60 // 1 day
+  })
+}));
+
+app.use((req, res, next) => {
+  if (req.session.currentUser) {
+    res.locals.currentUserInfo = req.session.currentUser;
+    res.locals.isUserLoggedIn = true;
+  } else {
+    res.locals.isUserLoggedIn = false;
+  }
+  next();
+});
+/* res.locals i think changes the local session, or the cookies
+    we check if there is a session, and if there is, it sets these "locals"
+    to be accessed by the view 
+    isUserLoggedIn: a boolean that indicates whether or not there is a logged in user
+    currentUserInfo: the user’s information from the session (only available if logged in)
+*/
+
+
+
+
+app.use(flash()); //what is this?
     
 
 const index = require('./routes/index');

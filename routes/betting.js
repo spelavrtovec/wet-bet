@@ -9,11 +9,11 @@ require("dotenv").config();
 
 
 betRoutes.get("/front-page", (req, res, next) => {
-    res.render("/betting/front-page", { "message": req.flash("error") });
+    res.render("betting/front-page", { "message": req.flash("error") });
   });
   
   betRoutes.get("/make-bet", (req, res, next) => {
-    res.render("/betting/make-bet", { "message": req.flash("error") });
+    res.render("betting/make-bet", { "message": req.flash("error") });
   });
   
 
