@@ -65,7 +65,7 @@ app.use(session({
   secret: 'Spela and Lars',
   resave: true,
   saveUninitialized: true,
-  cookie: { maxAge: 600000 }, //10 min of session
+  cookie: { maxAge: 1800000 }, //30 min of session
   store: new MongoStore({ 
     mongooseConnection: mongoose.connection,
     ttl: 24 * 60 * 60 // 1 day

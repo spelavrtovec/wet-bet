@@ -1,7 +1,17 @@
-    <a href="auth/login">Make a bet</a>
+    
+    
+    <a href="/betting/make-bet">Make a bet</a>
         {{!--
-        <button>Places</button> --}} {{!-- Maybe in the place, you can also choose the day --}} {{#each city}}
+        <button>Places</button> --}} {{!-- Maybe in the place, you can also choose the day --}} 
+        
+        <br><br><br>
+        
+        See bets for:
+        <ul>
+            <li><a href="#">Berlin</a></li>
+            <li><a href="#">Paris</a></li>
+            <li><a href="#">London</a></li>
+        </ul>
         <a href="/{{city}}">
             {{{city}}}
         </a>
-        {{/each}}

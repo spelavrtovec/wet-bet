@@ -25,5 +25,12 @@ betRoutes.get("/front-page", (req, res, next) => {
     res.render("betting/make-bet", { "message": req.flash("error") });
   });
   
+  betRoutes.get("/make-bet", (req, res, next) => {
+    res.render("betting/make-bet", { "message": req.flash("error") });
+  });
+
+  betRoutes.get("/make-bet", (req, res, next) => {
+    res.render("betting/make-bet", { "message": req.flash("error") });
+  });
 
   module.exports = betRoutes;
