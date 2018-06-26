@@ -7,11 +7,7 @@ const nodemailer = require('nodemailer');
 const User = require("../models/User");
 const session    = require("express-session");
 
-
-
 require("dotenv").config(); 
-
-
 
 betRoutes.get("/front-page", (req, res, next) => {
     console.log(req.session.currentUser._id);
