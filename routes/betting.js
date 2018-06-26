@@ -4,6 +4,7 @@ const passport = require("passport");
 const betRoutes = express.Router();
 const nodemailer = require("nodemailer");
 const User = require("../models/User");
+const Challenge = require("../models/Challenge");
 const Bet = require("../models/Bet");
 const session = require("express-session");
 const bodyParser   = require('body-parser');
@@ -49,21 +50,38 @@ betRoutes.get("/day-and-place", (req, res, next) => {
 betRoutes.post("/day-and-place", (req, res, next) => {
   const date = req.body.date;
   const city = req.body.city;
-  // var city = e.options[e.selectedIndex].text;
-  // const city = .options[cityElem.selectedIndex].value;
-  // const city = req.body.cityInput;
   const temperature = req.body.temperature;
   console.log(city)
 
 
   const newBet = new Bet({
-    date,
-    city,
     temperature
   });
+
   newBet.save();
+
+  const newChallenge = new Challenge({
+    date,
+    city,
+  });
+
+
+  //may have to do the findOne-method first
+  Challenge
+  .findOne({ 'city': city, 'date': date})
+  .populate("Bet")
+  .exec(function (err, challenge) {
+      if (err) return handleError(err);
+      console.log('The author is %s', challenge);
+      // prints "The author is Ian Fleming"
+  });
+  newChallenge.save();
   res.redirect("day-and-place");
 }); //end of post /day and place
 
+
+betRoutes.get("/:city", (req, res) => {
+  Challenge.find()
+}); 
 
 module.exports = betRoutes;

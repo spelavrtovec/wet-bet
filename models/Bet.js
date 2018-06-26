@@ -4,8 +4,6 @@ const User = require("../models/User");
 
   const betSchema = new Schema({
     _user: {type: Schema.Types.ObjectId, ref: "User" },
-    date: String,
-    city: String,
     temperature: Number,
     cloudiness: Number, //in %
     humidity: Number, //in %
