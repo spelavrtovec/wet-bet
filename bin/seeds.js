@@ -70,12 +70,12 @@ const users = [
     password: "passout",
     email: "lars1702@gmail.com",
     status: "Active",
+    weatherPoints: 3000,
     // confirmation: { type: String, unique: true },
     timestamps: {
       createdAt: 'created_at',
       updatedAt: 'updated_at'
     },
-    weatherPoints: 3000
   }
 ];
 

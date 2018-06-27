@@ -11,12 +11,12 @@ const userSchema = new Schema({
     default: "Pending Confirmation",
   },
   confirmation: { type: String, unique: true },
+  weatherPoints: Number
 }, {
   timestamps: {
     createdAt: 'created_at',
     updatedAt: 'updated_at'
   },
-  weatherPoints: Number
 });
 
 const User = mongoose.model('User', userSchema);

@@ -1,6 +1,5 @@
 /* jshint esversion: 6 */
 const express = require("express");
-const passport = require("passport");
 const betRoutes = express.Router();
 const nodemailer = require("nodemailer");
 const User = require("../models/User");
@@ -39,12 +38,12 @@ betRoutes.get("/make-bet", (req, res, next) => {
   res.render("betting/make-bet", { date });
 });
 
-betRoutes.get("/day-and-place", (req, res, next) => {
-  if (!req.session.currentUser) {
-    res.redirect("/");
-  }
-  res.render("betting/day-and-place", { message: req.flash("error") });
-});
+// betRoutes.get("/day-and-place", (req, res, next) => {
+//   if (!req.session.currentUser) {
+//     res.redirect("/");
+//   }
+//   res.render("betting/day-and-place", { message: req.flash("error") });
+// });
 
 
 betRoutes.post("/day-and-place", (req, res, next) => {
@@ -58,30 +57,44 @@ betRoutes.post("/day-and-place", (req, res, next) => {
     temperature
   });
 
-  newBet.save();
-
   const newChallenge = new Challenge({
     date,
-    city,
+    city
   });
 
+  newBet.save();
 
-  //may have to do the findOne-method first
-  Challenge
-  .findOne({ 'city': city, 'date': date})
-  .populate("Bet")
-  .exec(function (err, challenge) {
-      if (err) return handleError(err);
-      console.log('The author is %s', challenge);
-      // prints "The author is Ian Fleming"
-  });
-  newChallenge.save();
-  res.redirect("day-and-place");
+  newChallenge
+  .save()
+  .then( (currentChallenge) => {
+    console.log("going to unshift next")
+    currentChallenge._bets.unshift(newBet)
+    currentChallenge.save()
+    console.log(`BETS ARRAY: ${currentChallenge}`)
+  })
+  
+  res.redirect(`/betting/${city}/${date}`)
 }); //end of post /day and place
 
 
-betRoutes.get("/:city", (req, res) => {
-  Challenge.find()
-}); 
+betRoutes.get("/:city/:date", (req, res) => {
+  let city = req.params.city;
+  let date = req.params.date;
+  Challenge
+    .findOne({ 'city': city, 'date': date })
+    .populate("_bets")
+    // .populate("_comments")
+    .then(challenge => {
+      console.log(challenge);
+      if (!req.session.currentUser) {
+        res.redirect("/");
+      }
+      res.render("betting/day-and-place", challenge);
+    })
+    .catch(err => {
+      handleError(err);
+    });
+
+});
 
 module.exports = betRoutes;

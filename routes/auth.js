@@ -1,7 +1,6 @@
 /* jshint esversion: 6 */
 
 const express = require("express");
-const passport = require('passport');
 const authRoutes = express.Router();
 const nodemailer = require('nodemailer');
 const User = require("../models/User");
@@ -12,17 +11,7 @@ require("dotenv").config();
 const bcrypt = require("bcrypt");
 const bcryptSalt = 10;
 
-
-
-// authRoutes.post("/login", passport.authenticate("local", {
-//   successRedirect: "/",
-//   failureRedirect: "/auth/login",
-//   failureFlash: true,
-//   passReqToCallback: true
-// }));
-
-
-
+///////////////////////S I G N U P
 authRoutes.get("/signup", (req, res, next) => {
 
   res.render("auth/signup", {
@@ -105,20 +94,7 @@ authRoutes.post("/signup", (req, res, next) => {
   });
 });
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+//////////////////L O G I N
 authRoutes.get("/login", (req, res, next) => {
   res.render("auth/login", {
     "message": req.flash("error")
@@ -158,26 +134,7 @@ authRoutes.post('/login', (req, res, next) => {
   });
 });
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+///////////////C O N F I R M A T I O N
 authRoutes.get("/confirm/:hashConfirmation", (req, res) => {
   User.findOne({
       confirmation: req.params.hashConfirmation
@@ -196,11 +153,7 @@ authRoutes.get("/confirm/:hashConfirmation", (req, res) => {
     });
 });
 
-
-
-
-
-
+/////////////////L O G O U T
 authRoutes.get('/logout', (req, res, next) => {
   if (!req.session.currentUser) {
     res.redirect('/');
