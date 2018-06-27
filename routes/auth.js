@@ -35,7 +35,8 @@ authRoutes.post("/signup", (req, res, next) => {
   }
   console.log("CONSOLE LOG 3")
   //if the username already exists
-  User.findOne({
+  User
+  .findOne({
     username
   }, "username", (err, user) => {
     if (user !== null) {
@@ -88,7 +89,7 @@ authRoutes.post("/signup", (req, res, next) => {
           html: `Click on this link: http://localhost:3000/auth/confirm/${hashConfirmation}`
         });
         console.log(email);
-        res.redirect("/");
+        res.redirect("/login");
       }
     });
   });
@@ -133,6 +134,8 @@ authRoutes.post('/login', (req, res, next) => {
     res.redirect('../betting/front-page');
   });
 });
+
+
 
 ///////////////C O N F I R M A T I O N
 authRoutes.get("/confirm/:hashConfirmation", (req, res) => {

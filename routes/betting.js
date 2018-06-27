@@ -53,22 +53,15 @@ betRoutes.post("/day-and-place", (req, res, next) => {
 
   newBet.save();
 
-  Bet
-  .save()
-  .then( (currentBet) => {
-    currentBet._users.unshift(newBet)
-    currentBet.save()
-  })
-
   Challenge
-  .findOne({$and: [{"city": city}, {"date": date}] })
-  .then( (currentChallenge) => {
-    currentChallenge._bets.unshift(newBet)
-    currentChallenge.save()
+  .findOne({$and: [{"city": city}, {"date": date}] }) //finding the document in challenge collection with the given parameters
+  .then( (currentChallenge) => { //using that document -->
+    currentChallenge._bets.unshift(newBet) // and putting bets into it, unshifting to the start of the array
+    currentChallenge.save() //then actually saving it to the db
   })
-  .catch(() => 
+  .catch(() => //if findOne does not find a document with the given queries, we just make a new document
   newChallenge.save()
-    .then( (currentChallenge) => {
+    .then( (currentChallenge) => { //and do the same stuff as above
       currentChallenge._bets.unshift(newBet)
       currentChallenge.save()
     })
@@ -106,16 +99,10 @@ betRoutes.get("/all-bets", (req, res) => {
     })
 });
 
+betRoutes.get("/user", (req, res, next) => {
+  const user = req.session.currentUser;
 
-betRoutes.get("/:username", (req, res, next) => {
-
-  User
-  .find()
-  .populate("_bets")
-  .then( info => {
-    console.log(info)
-    res.render("betting/user", info);
-  })
+  res.render('betting/user',{user});
 });
 
 module.exports = betRoutes;
