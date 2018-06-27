@@ -8,13 +8,10 @@ const Bet = require("../models/Bet");
 const session = require("express-session");
 const bodyParser   = require('body-parser');
 
+
 require("dotenv").config();
 
 betRoutes.get("/front-page", (req, res, next) => {
-  console.log(req.session.currentUser._id);
-  if (!req.session.currentUser) {
-    res.redirect("/");
-  }
   res.render("betting/front-page", { message: req.flash("error") });
 });
 
@@ -38,12 +35,6 @@ betRoutes.get("/make-bet", (req, res, next) => {
   res.render("betting/make-bet", { date });
 });
 
-// betRoutes.get("/day-and-place", (req, res, next) => {
-//   if (!req.session.currentUser) {
-//     res.redirect("/");
-//   }
-//   res.render("betting/day-and-place", { message: req.flash("error") });
-// });
 
 
 betRoutes.post("/day-and-place", (req, res, next) => {
@@ -57,43 +48,74 @@ betRoutes.post("/day-and-place", (req, res, next) => {
 
   const newChallenge = new Challenge({
     date,
-    city,
+    city
   });
 
   newBet.save();
 
-  newChallenge
+  Bet
   .save()
+  .then( (currentBet) => {
+    currentBet._users.unshift(newBet)
+    currentBet.save()
+  })
+
+  Challenge
+  .findOne({$and: [{"city": city}, {"date": date}] })
   .then( (currentChallenge) => {
-    console.log("going to unshift next")
     currentChallenge._bets.unshift(newBet)
     currentChallenge.save()
-    console.log(`BETS ARRAY: ${currentChallenge}`)
   })
-  
+  .catch(() => 
+  newChallenge.save()
+    .then( (currentChallenge) => {
+      currentChallenge._bets.unshift(newBet)
+      currentChallenge.save()
+    })
+  )
+
   res.redirect(`/betting/${city}/${date}`)
 }); //end of post /day and place
 
 
+
+//this BETroute takes the user to the "current" bet that he or she just made their own bet on
 betRoutes.get("/:city/:date", (req, res) => {
   let city = req.params.city;
   let date = req.params.date;
 
   Challenge
-    .findOne({ 'city': city, 'date': date })
+    .find({$and: [{"city": city}, {"date": date}] })
     .populate("_bets")
     // .populate("_comments")
-    .then(challenge => {
-      console.log(challenge);
-      if (!req.session.currentUser) {
-        res.redirect("/");
-      //get method for weather API here
-      }
-      res.render("betting/day-and-place", challenge);
+    .then( challenge => {
+      console.log(challenge)
+      res.render("betting/day-and-place", { challenge });
     })
-    .catch(err => {
-      handleError(err);
-    });
+});
+
+
+betRoutes.get("/all-bets", (req, res) => {
+
+  Challenge
+    .find()
+    .populate("_bets")
+    .then( bets => {
+      console.log(bets)
+      res.render("betting/all-bets", { bets });
+    })
+});
+
+
+betRoutes.get("/:username", (req, res, next) => {
+
+  User
+  .find()
+  .populate("_bets")
+  .then( info => {
+    console.log(info)
+    res.render("betting/user", info);
+  })
 });
 
 module.exports = betRoutes;

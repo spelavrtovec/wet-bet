@@ -9,11 +9,12 @@ const hbs          = require('hbs');
 const mongoose     = require('mongoose');
 const logger       = require('morgan');
 const path         = require('path');
-const openweather  = require("openweather-apis");
+const weather      = require("openweather-apis");
 
 const session    = require("express-session");
 const MongoStore = require('connect-mongo')(session);
 const flash      = require("connect-flash");
+const ensureLoggedIn = require("./middlewares/isloggedin");
     
 
 mongoose.Promise = Promise;
@@ -102,7 +103,14 @@ const authRoutes = require('./routes/auth');
 app.use('/auth', authRoutes);
       
 const betRoutes = require('./routes/betting');
-app.use('/betting', betRoutes);
+app.use('/betting', ensureLoggedIn("/"), betRoutes);
+
+
+
+
+
+
+
 
 
 var makeMaxDate = function() {
@@ -125,6 +133,11 @@ var makeMaxDate = function() {
 
 let date = makeMaxDate();
 
-weather.setAPPID(process.env.WEATHER_KEY)
+weather.setLang("en");
+// weather.setCity("Berlin")
+weather.setCityId("2950159"); //Do we put the id of all the cities we are using here? Or none?
+weather.setUnits("metric");
+
+weather.setAPPID(process.env.WEATHER_KEY);
 
 module.exports = app;

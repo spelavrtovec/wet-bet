@@ -1,6 +1,18 @@
+ Great, here are the current bets on the place and date you just bet on:
 
-Great, here are the current bets:
+<div class="challenges-wrapper my-2">
+  {{#each challenge }}
+  <div class="card my-2 px-3">
+    <h3>City: {{ city }}</h3>
+    <p>Date: {{ date }}</p>
+    <ul class="ul">
+       {{#each _bets }}
+      <li>Temperature: {{ this.temperature }}</li>
+      {{/each}}
+    </ul>
 
-
-JSON OBJECT
-
+  </div>
+  {{/each}}
+</div>
+<a href="/betting/all-bets">See all the bets!!!!!!!!!!!!!!!!!!"!112312</a>
+<br>

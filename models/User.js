@@ -11,7 +11,7 @@ const userSchema = new Schema({
     default: "Pending Confirmation",
   },
   confirmation: { type: String, unique: true },
-  weatherPoints: Number
+  weatherPoints: Number,
 }, {
   timestamps: {
     createdAt: 'created_at',

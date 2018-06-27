@@ -21,14 +21,17 @@
             </li>
             {{#if isUserLoggedIn }}
               <li class="nav-item"> 
-                <a class="nav-link" href="/betting/bets"> See bets </a> 
-                </li>
+                <a class="nav-link" href="/betting/all-bets"> See bets </a> 
+              </li>
               <li class="nav-item"> 
-                <a class="nav-link" href="/betting/profile"> See profile </a> 
-                </li>
+                <a class="nav-link" href="/betting/make-bet"> Make a bet! </a> 
+              </li>
+              <li class="nav-item"> 
+                <a class="nav-link" href="/betting/user"> See profile </a> 
+              </li>
               <li class="nav-item"> 
                 <a class="nav-link" href="/auth/logout"> Log Out </a> 
-                </li>
+              </li>
               {{else}}
                 <li class="nav-item">
                   <a class="nav-link" href="/auth/signup">Sign up</a>

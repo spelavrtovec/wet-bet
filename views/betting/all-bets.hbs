@@ -1,0 +1,21 @@
+<h1 class="current-bets">
+  See all the active bets!
+</h1>
+
+<div class="bets-wrapper my-2">
+  {{#each bets }}
+  <div class="card my-2 px-3">
+    <h3>City: {{ city }}</h3>
+    <p>Date: {{ date }}</p>
+    <h5>temperature bets:</h5>
+    <ul class="ul"> 
+       {{#each _bets }}
+      <li>{{ this.temperature }}</li>
+      {{/each}}
+    </ul>
+    <a href="/betting/{{ city }}/{{ date }}">see this bet</a>
+  </div>
+  {{/each}}
+</div>
+
+<br>
