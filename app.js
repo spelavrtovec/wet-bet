@@ -9,6 +9,7 @@ const hbs          = require('hbs');
 const mongoose     = require('mongoose');
 const logger       = require('morgan');
 const path         = require('path');
+const openweather  = require("openweather-apis");
 
 const session    = require("express-session");
 const MongoStore = require('connect-mongo')(session);
@@ -123,5 +124,7 @@ var makeMaxDate = function() {
 };
 
 let date = makeMaxDate();
+
+weather.setAPPID(process.env.WEATHER_KEY)
 
 module.exports = app;

@@ -50,8 +50,6 @@ betRoutes.post("/day-and-place", (req, res, next) => {
   const date = req.body.date;
   const city = req.body.city;
   const temperature = req.body.temperature;
-  console.log(city)
-
 
   const newBet = new Bet({
     temperature
@@ -59,7 +57,7 @@ betRoutes.post("/day-and-place", (req, res, next) => {
 
   const newChallenge = new Challenge({
     date,
-    city
+    city,
   });
 
   newBet.save();
@@ -80,6 +78,7 @@ betRoutes.post("/day-and-place", (req, res, next) => {
 betRoutes.get("/:city/:date", (req, res) => {
   let city = req.params.city;
   let date = req.params.date;
+
   Challenge
     .findOne({ 'city': city, 'date': date })
     .populate("_bets")
@@ -88,13 +87,13 @@ betRoutes.get("/:city/:date", (req, res) => {
       console.log(challenge);
       if (!req.session.currentUser) {
         res.redirect("/");
+      //get method for weather API here
       }
       res.render("betting/day-and-place", challenge);
     })
     .catch(err => {
       handleError(err);
     });
-
 });
 
 module.exports = betRoutes;
