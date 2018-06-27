@@ -112,6 +112,9 @@ app.use('/betting', ensureLoggedIn("/"), betRoutes);
 
 
 
+const wetRoutes = require('./routes/weather-api');
+app.use('/wet', wetRoutes);
+
 
 var makeMaxDate = function() {
 
