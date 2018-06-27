@@ -106,14 +106,13 @@ const betRoutes = require('./routes/betting');
 app.use('/betting', ensureLoggedIn("/"), betRoutes);
 
 
-
-
-
-
-
-
 const wetRoutes = require('./routes/weather-api');
 app.use('/wet', wetRoutes);
+
+
+const evaluationRoutes = require('./routes/evaluation');
+app.use('/evaluation', evaluationRoutes);
+
 
 
 var makeMaxDate = function() {
@@ -134,10 +133,12 @@ var makeMaxDate = function() {
   return maxDate;
 };
 
-let date = makeMaxDate();
 
+
+
+//HERE LIES SETTINGS FOR THE WEATHER API
+let date = makeMaxDate();
 weather.setLang("en");
-// weather.setCity("Berlin")
 weather.setCityId("2950159"); //Do we put the id of all the cities we are using here? Or none?
 weather.setUnits("metric");
 

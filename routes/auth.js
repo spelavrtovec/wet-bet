@@ -89,7 +89,8 @@ authRoutes.post("/signup", (req, res, next) => {
           html: `Click on this link: http://localhost:3000/auth/confirm/${hashConfirmation}`
         });
         console.log(email);
-        res.redirect("/login");
+        let newUser = "You have signed up"
+        res.render("auth/login", {newUser});
       }
     });
   });

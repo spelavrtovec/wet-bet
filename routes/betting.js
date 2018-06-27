@@ -42,17 +42,32 @@ betRoutes.post("/day-and-place", (req, res, next) => {
   const city = req.body.city;
   const temperature = req.body.temperature;
 
+  let userId = req.session.currentUser._id
+
+  console.log("req", req.session.currentUser);
+  
+
   const newBet = new Bet({
-    temperature
+    temperature,
+    _user: userId,
   });
 
   const newChallenge = new Challenge({
     date,
-    city
+    city,
   });
+
+  newBet._challenge = newChallenge._id
 
   newBet.save();
 
+  User.findByIdAndUpdate(userId, {$push: { _bets: newBet._id }}, { 'new': true})
+  // .then(user => {
+  //   console.log("It worked!!!", user);
+  // })
+  // .catch(err => console.log("err", err));
+  
+  
   Challenge
   .findOne({$and: [{"city": city}, {"date": date}] }) //finding the document in challenge collection with the given parameters
   .then( (currentChallenge) => { //using that document -->
@@ -61,13 +76,13 @@ betRoutes.post("/day-and-place", (req, res, next) => {
   })
   .catch(() => //if findOne does not find a document with the given queries, we just make a new document
   newChallenge.save()
-    .then( (currentChallenge) => { //and do the same stuff as above
-      currentChallenge._bets.unshift(newBet)
-      currentChallenge.save()
-    })
-  )
+  .then( (currentChallenge) => { //and do the same stuff as above
+    currentChallenge._bets.unshift(newBet)
+    currentChallenge.save()
+  })
+)
+res.redirect(`/betting/${city}/${date}`)
 
-  res.redirect(`/betting/${city}/${date}`)
 }); //end of post /day and place
 
 
@@ -100,9 +115,16 @@ betRoutes.get("/all-bets", (req, res) => {
 });
 
 betRoutes.get("/user", (req, res, next) => {
-  const user = req.session.currentUser;
-
-  res.render('betting/user',{user});
+  User.findById(req.session.currentUser._id)
+  .populate({
+    path:     '_bets',			
+    populate: {
+      path:  '_challenge',
+    }
+  })
+  .then(user => {
+    res.render('betting/user',{user});
+  })
 });
 
 module.exports = betRoutes;

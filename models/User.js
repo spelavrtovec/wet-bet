@@ -12,6 +12,7 @@ const userSchema = new Schema({
   },
   confirmation: { type: String, unique: true },
   weatherPoints: Number,
+  _bets: [{ type: Schema.Types.ObjectId, ref: "Bet" }],
 }, {
   timestamps: {
     createdAt: 'created_at',

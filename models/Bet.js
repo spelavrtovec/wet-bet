@@ -9,6 +9,7 @@ const User = require("../models/User");
     humidity: Number, //in %
     pressure: Number, //in hPa
     weatherPoints: Number,
+    _challenge: {type: Schema.Types.ObjectId, ref: "Challenge" },
   }, {
     timestamps: {
       createdAt: 'created_at',
