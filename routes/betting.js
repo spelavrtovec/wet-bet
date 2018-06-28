@@ -7,6 +7,8 @@ const Challenge = require("../models/Challenge");
 const Bet = require("../models/Bet");
 const session = require("express-session");
 const bodyParser   = require('body-parser');
+var weather = require('openweather-apis');
+
 
 
 require("dotenv").config();
@@ -44,7 +46,7 @@ betRoutes.post("/day-and-place", (req, res, next) => {
 
   let userId = req.session.currentUser._id
 
-  console.log("req", req.session.currentUser);
+  // console.log("req", req.session.currentUser);
   
 
   const newBet = new Bet({
@@ -59,13 +61,13 @@ betRoutes.post("/day-and-place", (req, res, next) => {
 
   newBet._challenge = newChallenge._id
 
-  console.log("THIS IS NEW-BET ID",newBet._id)
+  // console.log("THIS IS NEW-BET ID",newBet._id)
 
   newBet.save();
 
   User.findByIdAndUpdate(userId, {$push: { _bets: newBet._id }}, { 'new': true}) // first query here finds the current user id. Then we push into that users _bets the newBet_id
   .then(user => {
-    console.log("user",user);
+    // console.log("user",user);
   })
   .catch(err => console.log("err", err));
   
@@ -82,10 +84,49 @@ betRoutes.post("/day-and-place", (req, res, next) => {
     currentChallenge._bets.unshift(newBet)
     currentChallenge.save()
   })
-).then(() => {
+
+
+
+).then(() => {//after all database stuff
+  let makeTodayDate = function() {
+    let dateToday = new Date();
+    let month = dateToday.getMonth() + 1;
+    let day = dateToday.getDate();
+    let year = dateToday.getFullYear();
+  
+    if (month < 10) month = "0" + month.toString();
+  
+    if (day < 10) day = "0" + day.toString();
+  
+    let todayDate = year + "-" + month + "-" + day;
+    return todayDate; //now returns object - can be used directly in queries
+  };
+  
+  
+
+  //hope to return 
+  function returnWinners () { //cityId is a number-type. 
+    let today = makeTodayDate()
+    weather.setLang('en');
+    weather.setUnits('metric');
+    Challenge.find({"date": today}) //can i pass the return of a function in a find?
+    .then(todaysBets => {
+      console.log("These are todays bets------------",todaysBets);
+      consolt.log()
+      // todaysBets.forEach(axios.get
+      // weather.setCityId(cityId);  //find id from challenges after all bets are found
+      // )
+      return console.log(todaysBets)
+    });
+  } //end of returnWinners
+
+  returnWinners()
 
   res.redirect(`/betting/${city}/${date}`); //put the redirect inside this otherwise empty then just to make sure it only executed after everything else was finished. Otherwise there were probs with newest bet not showing.
 });
+
+
+
 
 }); //end of post /day and place
 

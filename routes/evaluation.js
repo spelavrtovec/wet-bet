@@ -5,22 +5,62 @@ const Challenge         = require("../models/Challenge");
 const User              = require("../models/User");
 const Bet               = require("../models/Bet");
 const axios             = require("axios");
+const weather           = require('openweather-apis');
 
 
 require("dotenv").config();
+
+var ownKey = '2ce6257b4750f65dba40d4a014382b80';
+weather.setAPPID(ownKey);
+
+
+
+let makeTodayDate = function() {
+  let dateToday = new Date();
+  let month = dateToday.getMonth() + 1;
+  let day = dateToday.getDate();
+  let year = dateToday.getFullYear();
+
+  if (month < 10) month = "0" + month.toString();
+
+  if (day < 10) day = "0" + day.toString();
+
+  let todayDate = year + "-" + month + "-" + day;
+  return {date: todayDate}; //now returns object - can be used directly in queries
+};
+
+
+
+
+
+//hope to return 
+function returnWinners (cityId) { //cityId is a number-type. 
+  weather.setLang('en');
+  weather.setUnits('metric');
+  Challenge.find(makeTodayDate()) //can i pass the return of a function in a find?
+  .then(todaysBets => {
+    console.log("These are todays bets------------",todaysBets);
+    // todaysBets.forEach(axios.get
+    // weather.setCityId(cityId);  //find id from challenges after all bets are found
+    // )
+  });
+
+}
+
+
+
+
+
+
 
 
 
 // This route will be called once per day at 5PM
 evaluationRoutes.get("/", (req, res, next) => {
   console.log(Challenge.find(_bets));
-  
-    // For each challenge of the current day
-    // Get the current temperature of the city
-    // Get all the bets with the good temperature
-    // Increment the score of the user 
+  returnWinners()
   res.json({
-    nbOfWiningUsers: 0
+    nbOfWinningUsers: 0
   })
 });
 
