@@ -7,7 +7,8 @@ const Challenge = require("../models/Challenge");
 const Bet = require("../models/Bet");
 const session = require("express-session");
 const bodyParser   = require('body-parser');
-var weather = require('openweather-apis');
+const weather = require('openweather-apis');
+const axios = require("axios")
 
 
 
@@ -39,6 +40,11 @@ betRoutes.get("/make-bet", (req, res, next) => {
 
 
 
+
+
+
+
+
 betRoutes.post("/day-and-place", (req, res, next) => {
   const date = req.body.date;
   const city = req.body.city;
@@ -59,15 +65,20 @@ betRoutes.post("/day-and-place", (req, res, next) => {
     city,
   });
 
-  newBet._challenge = newChallenge._id
 
-  // console.log("THIS IS NEW-BET ID",newBet._id)
-
+  newBet._challenge = newChallenge._id 
+  //effectively adding challenges to our Bet instance (just above)
+  //but isn't the newChallengeId unique? Only one, and i think this refers to the id of the literally "new challenge"
+  //OK, so if it's here saving in the bet only new challenges, I need to later save in bets old challenges
   newBet.save();
 
-  User.findByIdAndUpdate(userId, {$push: { _bets: newBet._id }}, { 'new': true}) // first query here finds the current user id. Then we push into that users _bets the newBet_id
+  // first query here finds the current user id. Then we push into that users _bets the newBet_id
+  // What happens: above, we have but challenges into the bet instance (just above)
+  // then (just under) we put that bet instance in the user collection
+
+  User.findByIdAndUpdate(userId, {$push: { _bets: newBet._id }}, { 'new': true}) 
   .then(user => {
-    // console.log("user",user);
+    console.log("user",user);
   })
   .catch(err => console.log("err", err));
   
@@ -84,10 +95,11 @@ betRoutes.post("/day-and-place", (req, res, next) => {
     currentChallenge._bets.unshift(newBet)
     currentChallenge.save()
   })
-
-
-
 ).then(() => {//after all database stuff
+
+  ///////////////////
+  //////// THIS IS GOING TO THE EVALUATION
+  ///////////////////
   let makeTodayDate = function() {
     let dateToday = new Date();
     let month = dateToday.getMonth() + 1;
@@ -103,24 +115,62 @@ betRoutes.post("/day-and-place", (req, res, next) => {
   };
   
   
-
-  //hope to return 
   function returnWinners () { //cityId is a number-type. 
     let today = makeTodayDate()
-    weather.setLang('en');
-    weather.setUnits('metric');
-    Challenge.find({"date": today}) //can i pass the return of a function in a find?
+    Challenge.find({
+        "date": today
+      })
+      .populate({
+        path: '_bets',
+        populate: {
+          path: '_user',
+        }
+      })
     .then(todaysBets => {
-      console.log("These are todays bets------------",todaysBets);
-      consolt.log()
-      // todaysBets.forEach(axios.get
-      // weather.setCityId(cityId);  //find id from challenges after all bets are found
-      // )
-      return console.log(todaysBets)
+      for (let i=0; i<todaysBets.length; i++) { //going inside city and date
+        // console.log(todaysBets[i])
+
+        let city = todaysBets[i].city;
+        let appId = process.env.WEATHER_KEY;
+        let weatherQueries = `${city}&units=metric&APPID=${appId}`
+        axios.get(`https://api.openweathermap.org/data/2.5/weather?q=${weatherQueries}`)
+        .then(value => {
+          let tempNowFromApi = Math.round(value.data.main.temp)
+          todaysBets[i]._bets.forEach( (j, index) => {
+              // each bet in todaysbets is j, and each of those have a user,
+            let tempOfCurrentBet = j.temperature;
+            // console.log(`${city} BET`, j.temperature);
+            if (tempOfCurrentBet == tempNowFromApi) {
+              User.findByIdAndUpdate(j._user._id, {weatherPoints:j._user.weatherPoints+5 }, {new: true})
+              .then((value)=>{
+
+                // console.log(value)
+                console.log("These are the winning bets:",city ,j._user.username, tempOfCurrentBet, "\n\n")
+              })
+              
+              //we want tempOfCurrentBet and then find it's "owners", and then award those owners with points, and done. 
+              //give the user weatherPoints
+            }
+          });
+
+        })
+        .catch(err=>console.log(err));
+
+        //   console.log ("THE CURRENT TEMP IN", todaysBets[i].city,"IS", temp)
+        // console.log("BET NUMBER",i, "\n" ,  todaysBets[i]._bets);
+
+      }
+      console.log()
+      return;
+      // console.log("These are todays bets------------","\n\n",todaysBets., "\n")
     });
   } //end of returnWinners
 
   returnWinners()
+
+  ////////
+  //// TO EVALUTION STOPS
+  ////////
 
   res.redirect(`/betting/${city}/${date}`); //put the redirect inside this otherwise empty then just to make sure it only executed after everything else was finished. Otherwise there were probs with newest bet not showing.
 });
@@ -166,8 +216,10 @@ betRoutes.get("/user", (req, res, next) => {
     populate: {
       path:  '_challenge',
     }
+    
   })
   .then(user => {
+    console.log(user._bets[0])
     res.render('betting/user',{user});
   })
 });

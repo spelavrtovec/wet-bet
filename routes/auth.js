@@ -63,9 +63,34 @@ authRoutes.post("/signup", (req, res, next) => {
       password: hashPass,
       email,
       confirmation: hashConfirmation,
-      _bets: [  ]
+      _bets: [  ],
+      weatherPoints: 100
       // role: ??
     });
+
+
+    // Challenge
+    // .findOne({$and: [{"city": city}, {"date": date}] }) //finding the document in challenge collection with the given parameters
+    // .then( (currentChallenge) => { //using that document -->
+    //   currentChallenge._bets.unshift(newBet) // and putting bets into it, unshifting to the start of the array
+    //   currentChallenge.save() //then actually saving it to the db
+    // })
+    // .catch(() => //if findOne does not find a document with the given queries, we just make a new document
+    // newChallenge.save()
+    // .then( (currentChallenge) => { //and do the same stuff as above
+    //   currentChallenge._bets.unshift(newBet)
+    //   currentChallenge.save()
+    // })
+    
+    User
+    .findOne(email) //finding the current user by the email because email is unique
+    .then((currentUser) => {
+      currentUser._bets.forEach((bet, index) => {
+        console.log(bet);
+        console.log(bet._challenge)
+      })
+    })
+
 
     newUser.save((err) => {
       if (err) {
@@ -90,8 +115,8 @@ authRoutes.post("/signup", (req, res, next) => {
           html: `Click on this link: http://localhost:3000/auth/confirm/${hashConfirmation}`
         });
         console.log(email);
-        let newUser = "You have signed up"
-        res.render("auth/login", {newUser});
+        let thisUser = "You have signed up"
+        res.render("auth/login", {thisUser});
       }
     });
   });

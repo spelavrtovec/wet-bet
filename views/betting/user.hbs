@@ -1,15 +1,20 @@
- <h1 class="text-capitalize">
-   {{ user.username }}
- </h1>
- <p>{{user.email}}</p>
+
+<div class="bg-light row align-items-baseline rounded justify-content-between px-2">
+  <div class="col">
+    <h1 class="text-capitalize">{{ user.username }}</h1>
+    <p>{{user.email}}</p>
+  </div>
+  <div class="bg-secondary d-inline-block p-1 rounded">
+    <span class="text-warning">{{user.weatherPoints}}</span>
+    <span class="text-light">WP</span>
+  </div>
+</div>
 
 
 
 <hr>
- {{user}}
-
-<ul>
+<ul class="ul card mx-2 px-4">
   {{#each user._bets}}
-    <li>{{this}}</li>
-  {{/each}}
+  <li>{{this._challenge.city}} {{this.temperature}}</li>
+  <hr class="mx-0"> {{/each}}
 </ul>
