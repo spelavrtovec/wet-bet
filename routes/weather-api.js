@@ -28,8 +28,7 @@ router.get('/', (req, res, next) => {
  	weather.setUnits('metric');
  
     // check http://openweathermap.org/appid#get for get the APPID
-    var ownKey = '2ce6257b4750f65dba40d4a014382b80';
- 	weather.setAPPID(ownKey);
+ 	weather.setAPPID(process.env.WEATHER_KEY);
     
 
     // get the Temperature  

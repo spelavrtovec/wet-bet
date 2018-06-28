@@ -4,7 +4,7 @@ const User = require("../models/User");
 const databaseName = "big-data";
 
 mongoose.Promise = Promise;
-mongoose.connect(`mongodb://localhost/${databaseName}`);
+mongoose.connect(process.env.MONGODB_URI);
 
 // const bets = [
 //   {

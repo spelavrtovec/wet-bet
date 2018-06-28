@@ -19,7 +19,8 @@ const axios           = require("axios");
 
 mongoose.Promise = Promise;
 mongoose
-  .connect('mongodb://localhost/big-data', {useMongoClient: true})
+  // .connect('mongodb://localhost/big-data', {useMongoClient: true})
+  .connect(process.env.MONGODB_URI, {useMongoClient: true})
   .then(() => {
     console.log('Connected to Mongo!');
   }).catch(err => {
@@ -74,6 +75,7 @@ app.use(session({
   })
 }));
 
+//comment
 app.use((req, res, next) => {
   if (req.session.currentUser) {
     res.locals.currentUserInfo = req.session.currentUser;

@@ -10,8 +10,7 @@ const weather           = require('openweather-apis');
 
 require("dotenv").config();
 
-var ownKey = '2ce6257b4750f65dba40d4a014382b80';
-weather.setAPPID(ownKey);
+weather.setAPPID(process.env.WEATHER_KEY);
 
 
 
