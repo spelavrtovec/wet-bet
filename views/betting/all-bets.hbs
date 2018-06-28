@@ -1,21 +1,26 @@
-<h1 class="current-bets">
-  See all the active bets!
+<h1 class="active-bets font-weight-bold">
+  Active bets
 </h1>
-
-<div class="bets-wrapper my-2">
-  {{#each bets }}
-  <div class="card my-2 px-3">
-    <h3>City: {{ city }}</h3>
-    <p>Date: {{ date }}</p>
-    <h5>temperature bets:</h5>
-    <ul class="ul"> 
-       {{#each _bets }}
-      <li>{{ this.temperature }}</li>
-      {{/each}}
-    </ul>
-    <a href="/betting/{{ city }}/{{ date }}">see this bet</a>
+<div class="container ">
+  <div class="bets-wrapper my-0 pt-2 row">
+    {{#each bets }}
+    <div class="card my-4 px-2 bg-light col-md-6">
+      <div class="card-headings m-1">
+        <h4 class="font-weight-bold">{{ city }}</h4>
+        <p class="mb-0 ml-1">{{ date }}</p>
+      </div>
+      <hr class="font-weight-bold">
+      <ul class="ul">
+        <h5>Temperature bets:</h5>
+        {{#each _bets }}
+        <li></li>
+        <span class="bold-span m">{{ this.temperature }}</span> °C</li>
+        {{/each}}
+      </ul>
+        <div class="d-flex align-items-end">
+          <a class="w-100 text-center mx-auto mb-3 btn btn-success br-none text-light font-weight-bold mx-2" href="/betting/{{ city }}/{{ date }}" role="button">Bets in {{ city }} this day</a>
+        </div>
+    </div>
+    {{/each}}
   </div>
-  {{/each}}
 </div>
-
-<br>

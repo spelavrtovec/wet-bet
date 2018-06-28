@@ -5,7 +5,7 @@ var weather = require('openweather-apis');
 router.get('/', (req, res, next) => {
     console.log("I am INNNN")
  
-    weather.setLang('it');
+    weather.setLang('en');
     // English - en, Russian - ru, Italian - it, Spanish - es (or sp),
     // Ukrainian - uk (or ua), German - de, Portuguese - pt,Romanian - ro,
     // Polish - pl, Finnish - fi, Dutch - nl, French - fr, Bulgarian - bg,

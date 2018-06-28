@@ -59,13 +59,15 @@ betRoutes.post("/day-and-place", (req, res, next) => {
 
   newBet._challenge = newChallenge._id
 
+  console.log("THIS IS NEW-BET ID",newBet._id)
+
   newBet.save();
 
-  User.findByIdAndUpdate(userId, {$push: { _bets: newBet._id }}, { 'new': true})
-  // .then(user => {
-  //   console.log("It worked!!!", user);
-  // })
-  // .catch(err => console.log("err", err));
+  User.findByIdAndUpdate(userId, {$push: { _bets: newBet._id }}, { 'new': true}) // first query here finds the current user id. Then we push into that users _bets the newBet_id
+  .then(user => {
+    console.log("user",user);
+  })
+  .catch(err => console.log("err", err));
   
   
   Challenge
@@ -80,8 +82,10 @@ betRoutes.post("/day-and-place", (req, res, next) => {
     currentChallenge._bets.unshift(newBet)
     currentChallenge.save()
   })
-)
-res.redirect(`/betting/${city}/${date}`)
+).then(() => {
+
+  res.redirect(`/betting/${city}/${date}`); //put the redirect inside this otherwise empty then just to make sure it only executed after everything else was finished. Otherwise there were probs with newest bet not showing.
+});
 
 }); //end of post /day and place
 
@@ -97,7 +101,7 @@ betRoutes.get("/:city/:date", (req, res) => {
     .populate("_bets")
     // .populate("_comments")
     .then( challenge => {
-      console.log(challenge)
+      // console.log(challenge)
       res.render("betting/day-and-place", { challenge });
     })
 });
@@ -109,7 +113,7 @@ betRoutes.get("/all-bets", (req, res) => {
     .find()
     .populate("_bets")
     .then( bets => {
-      console.log(bets)
+      // console.log(bets)
       res.render("betting/all-bets", { bets });
     })
 });

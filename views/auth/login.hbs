@@ -2,21 +2,21 @@
 <h2>Login</h2>
 
 <form action="/auth/login" method="POST" id="form-container">
-  <label for="email">Email:</label>
-  <input id="email" type="text" name="email" placeholder="Your email">
+  <label for="email">Email</label>
+  <input class="form-control" id="email" type="text" name="email" placeholder="Your email">
 
-  <br><br>
+  <br>
 
-  <label for="password">Password:</label>
-  <input id="password" type="password" name="password" placeholder="Your password">
+  <label for="password">Password</label>
+  <input class="form-control" id="password" type="password" name="password" placeholder="Your password">
   <br>
   {{#if message }}
     <div class="error-message">{{ message }}</div>
   {{/if}}
 
-  <br><br>
-  <button class="btn btn-light">Login</button>
+  <button class="btn btn-info">Login</button>
   <br>
+  <hr>
    <p class="account-message small">
   Don't have an account yet?<br>
   <a href="/auth/signup">Signup</a>

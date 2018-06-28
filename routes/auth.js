@@ -62,7 +62,8 @@ authRoutes.post("/signup", (req, res, next) => {
       username,
       password: hashPass,
       email,
-      confirmation: hashConfirmation
+      confirmation: hashConfirmation,
+      _bets: [  ]
       // role: ??
     });
 

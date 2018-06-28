@@ -1,18 +1,25 @@
- Great, here are the current bets on the place and date you just bet on:
 
-<div class="challenges-wrapper my-2">
+<div class="challenges-wrapper my-2 pt-2">
+ <p class="font-weight-bold">
+   Ongoing bets for
+ </p>
   {{#each challenge }}
-  <div class="card my-2 px-3">
-    <h3>City: {{ city }}</h3>
-    <p>Date: {{ date }}</p>
+  <div class="card my-2 px-3 bg-light">
+    <h3 class="font-weight-bold">{{ city }}</h3>
+    <p class="mb-1 ml-1">{{ date }}</p>
+    <hr class="font-weight-bold">
     <ul class="ul">
-       {{#each _bets }}
-      <li>Temperature: {{ this.temperature }}</li>
+      Temperature bets: {{#each _bets }}
+      <li>
+        <span class="bold-span m">{{ this.temperature }}</span> °C</li>
       {{/each}}
     </ul>
 
   </div>
   {{/each}}
+  <div class="bet-btns d-flex justify-content-start align-items-stretch">
+    <a class="btn btn-success br-none text-light font-weight-bold mx-2" href="/betting/all-bets" role="button">Current bets</a>
+    <a class="btn btn-info br-none text-light font-weight-bold mx-2" href="/betting/make-bet" role="button">New bet</a>
+  </div>
 </div>
-<a href="/betting/all-bets">See all the bets!!!!!!!!!!!!!!!!!!"!112312</a>
 <br>

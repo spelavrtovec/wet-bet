@@ -1,24 +1,27 @@
 <form action="/betting/day-and-place" method="POST" id="form-container">
+  {{!--  class="was-validated" will make the border green and can make it so it provides message when stuff isnt selected that should be --}}
+  <label for="day">Day you want to bet on</label>
+  <input class="form-control" type="date" name="date" id="date" min="{{date}}"/>
   
-  <label for="day">Day:</label>
-  <input type="date" name="date" id="date" min="{{date}}"/>
-  
-  <br><br>
+  <br>
 
-  <label for="place">Place:</label>
-  <select id="city" name="city"> 
-    <option id="tokyo" name="tokyo" value="Tokyo">Tokyo</option>
-    <option id="paris" name="paris" value="Paris">Paris</option>
-    <option id="berlin" name="berlin" value="Berlin">Berlin</option>
-    <option id="oslo" name="oslo" value="Oslo">Oslo</option>
-    <option id="ljubljana" name="ljubljana" value="Ljubljana">Ljubljana</option>
-  </select>
+  <div class="form-group">
+    <label for="place">Pick a city</label>
+    <select multiple class="form-control custom-select" id="city" name="city"> 
+      <option id="tokyo" name="tokyo" value="Tokyo">Tokyo</option>
+      <option id="paris" name="paris" value="Paris">Paris</option>
+      <option id="berlin" name="berlin" value="Berlin">Berlin</option>
+      <option id="oslo" name="oslo" value="Oslo">Oslo</option>
+      <option id="ljubljana" name="ljubljana" value="Ljubljana">Ljubljana</option>
+    </select>
+        <div class="invalid-feedback">Please select a city</div>
+  </div>
 
-  <br><br>
+  <br>
 
-  <label for="temperature">Temperature in CELSIUS:</label>
-  <input id="temperature" type="number" id="temperature" name="temperature" placeholder="Put in a number">
+  <label for="temperature">Your bet in celsius</label>
+  <input class="form-control" id="temperature" type="number" id="temperature" name="temperature" placeholder="Put in a number">
 
-  <br><br>
-  <button type="submit" class="btn btn-light">Place a bet</button>
+  <br>
+  <button type="submit" class="btn btn-success font-weight-bold w-100 py-2">Place a bet!</button>
 </form>

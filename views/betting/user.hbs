@@ -1,7 +1,12 @@
-HELLO {{ user.username }}. YOU ARE AWESOME
+ <h1 class="text-capitalize">
+   {{ user.username }}
+ </h1>
+ <p>{{user.email}}</p>
+
 
 
 <hr>
+ {{user}}
 
 <ul>
   {{#each user._bets}}

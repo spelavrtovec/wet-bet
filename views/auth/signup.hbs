@@ -1,26 +1,30 @@
 <div id="signup">
-<h1>You want to sign up for a betting page? <br>You might get wet from the fun that follows.</h1>
-<br>
-<form action="/auth/signup" method="POST" id="form-container">
-        <label for="username">Username: </label>
-        <input id="username" type="text" name="username" placeholder="Your username">
-        <br>
-        <label for="email">E-mail: </label>
-        <input id="email" type="text" name="email" placeholder="Your e-mail">
-        <br>
-        <label for="password">Password: </label>
-        <input id="password" type="password" name="password" placeholder="Your password">
-        <br><br>
-        {{#if message }}
-          <div class="error-message">{{ message }}</div>
-        {{/if}}
+  <h3>Sign up and make your first wet-bet today!</h3>
+  <h6>You might get wet from the fun that follows!</h6>
+  <br>
+  <form action="/auth/signup" method="POST" id="form-container">
+    <label for="username">Username: </label>
+    <input class="form-control" id="username" type="text" name="username" placeholder="Your username">
+    <br>
+    <label for="email">E-mail: </label>
+    <input class="form-control" id="email" type="text" name="email" placeholder="Your e-mail">
+    <br>
+    <label for="password">Password: </label>
+    <input class="form-control" id="password" type="password" name="password" placeholder="Your password">
+    
+    <br> {{#if message }}
+    <div class="error-message p-3 mb-2 bg-warning text-dark rounded">{{ message }} </div>
+    <br>
+    {{/if}}
 
-        <button type="submit" class="btn btn-light">Let's get it started</button>
-</form>
- <br><br>
+    <button type="submit" class="btn btn-success">Let's get it started</button>
+  </form>
+  <br>
+  <hr>
+  <br>
   <p class="account-message small">
-  Do you already have an account?<br>
-  <a href="/auth/login">Log in then</a>
+    Do you already have an account?
+    <br>
+    <a href="/auth/login">Log in then</a>
   </p>
 </div>
-
