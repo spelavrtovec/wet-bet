@@ -43,8 +43,6 @@ betRoutes.get("/make-bet", (req, res, next) => {
 
 
 
-
-
 betRoutes.post("/day-and-place", (req, res, next) => {
   const date = req.body.date;
   const city = req.body.city;
@@ -179,10 +177,6 @@ betRoutes.post("/day-and-place", (req, res, next) => {
 
   res.redirect(`/betting/${city}/${date}`); //put the redirect inside this otherwise empty then just to make sure it only executed after everything else was finished. Otherwise there were probs with newest bet not showing.
 });
-
-
-
-
 }); //end of post /day and place
 
 
@@ -201,7 +195,6 @@ betRoutes.get("/:city/:date", (req, res) => {
       res.render("betting/day-and-place", { challenge });
     })
 });
-
 
 betRoutes.get("/all-bets", (req, res) => {
 
