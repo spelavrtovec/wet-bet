@@ -100,7 +100,7 @@ betRoutes.post("/day-and-place", (req, res, next) => {
   })
 ).then(() => {//after all database stuff
   newBet.save(); //new bet only saved after currentchallange inserted into it
-  
+
 
   ///////////////////
   //////// THIS IS GOING TO THE EVALUATION
@@ -224,7 +224,7 @@ betRoutes.get("/user", (req, res, next) => {
     
   })
   .then(user => {
-    console.log(user._bets[0])
+    console.log(user._bets[user._bets.length-1])
     res.render('betting/user',{user});
   })
 });
