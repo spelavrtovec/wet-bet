@@ -65,9 +65,7 @@ authRoutes.post("/signup", (req, res, next) => {
       confirmation: hashConfirmation,
       _bets: [  ],
       weatherPoints: 100
-      // role: ??
     });
-
 
     // Challenge
     // .findOne({$and: [{"city": city}, {"date": date}] }) //finding the document in challenge collection with the given parameters
