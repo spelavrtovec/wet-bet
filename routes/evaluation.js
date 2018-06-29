@@ -12,22 +12,7 @@ require("dotenv").config();
 
 weather.setAPPID(process.env.WEATHER_KEY);
 
-let makeTodayDate = function() {
-  let dateToday = new Date();
-  let month = dateToday.getMonth() + 1;
-  let day = dateToday.getDate();
-  let year = dateToday.getFullYear();
 
-  if (month < 10) month = "0" + month.toString();
-
-  if (day < 10) day = "0" + day.toString();
-
-  let todayDate = year + "-" + month + "-" + day;
-  return {date: todayDate}; //now returns object - can be used directly in queries
-};
-
-//hope to return 
-function returnWinners (cityId) { //cityId is a number-type. 
   ///////////////////
   //////// THIS IS GOING TO THE EVALUATION
   ///////////////////
@@ -97,13 +82,17 @@ function returnWinners (cityId) { //cityId is a number-type.
     });
   } //end of returnWinners
 
-}
+  ////////
+  //// TO EVALUTION STOPS
+  ////////
+
+
+
 
 // This route will be called once per day at 5PM
 evaluationRoutes.get("/", (req, res, next) => {
-  console.log(Challenge.find(_bets));
   returnWinners()
-  res.render("user")
+  res.send("You did stuff")
 });
 
 module.exports = evaluationRoutes;

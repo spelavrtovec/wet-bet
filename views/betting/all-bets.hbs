@@ -1,21 +1,25 @@
 <div class="container mt-4">
 <h1 class="active-bets font-weight-bold">
   Active bets
+
 </h1>
 <div class="container ">
   <div class="bets-wrapper my-0 pt-2 px-20 row">
     {{#each bets }}
+
+
+  
     <div class="card my-4 px-2 bg-light col-md-6 mr-0.5">
       <div class="card-headings m-1">
         <h4 class="font-weight-bold">{{ city }}</h4>
         <p class="mb-0 ml-1">{{ date }}</p>
       </div>
-      <hr class="font-weight-bold">
+      <hr class="mb-4 mt-1 font-weight-bold">
       <ul class="ul">
         <h5>Temperature bets:</h5>
         {{#each _bets }}
         <li></li>
-        <span class="bold-span m">{{ this.temperature }}</span> °C</li>
+        <span class="bold-span m"> {{this._user.username}}</span> - {{ this.temperature }}</span> °C</li>
         {{/each}}
       </ul>
         <div class="d-flex align-items-end">

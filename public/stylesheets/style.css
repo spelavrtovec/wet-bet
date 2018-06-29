@@ -18,6 +18,9 @@ body {
 .innerStuff {
   margin: auto 10px; }
 
+.mw-form {
+  max-width: 500px; }
+
 .right {
   text-align: right; }
 
@@ -40,7 +43,7 @@ body {
   background-size: cover;
   background-repeat: no-repeat;
   color: white;
-  height: 90vh;
+  height: 100vh;
   margin: 0; }
 
 /*# sourceMappingURL=style.css.map */

@@ -15,7 +15,7 @@ const bcryptSalt = 10;
 authRoutes.get("/signup", (req, res, next) => {
 
   res.render("auth/signup", {
-    errorMessage: "ftyghujoklp"
+    errorMessage: "That didn't work out"
   });
 })
 
@@ -113,7 +113,7 @@ authRoutes.post("/signup", (req, res, next) => {
           html: `Click on this link: http://localhost:3000/auth/confirm/${hashConfirmation}`
         });
         console.log(email);
-        let thisUser = "You have signed up"
+        let thisUser = "You have signed up."
         res.render("auth/login", {thisUser});
       }
     });
