@@ -1,37 +1,37 @@
 @import url("https://fonts.googleapis.com/css?family=Roboto+Condensed");
 body {
-  font-family: 'Roboto Condensed', sans-serif; }
+  font-family: "Roboto Condensed", sans-serif; }
 
 .ul {
-  list-style: none; 
-}
+  list-style: none; }
 
 .bold-span {
-  font-weight: bold; 
-}
+  font-weight: bold; }
 
 .flex {
   display: flex;
-  margin: 70px 0;
-}
+  margin: 70px 0; }
 
 .beauties {
   width: 300px;
-  height: 200px;
-}
+  height: 200px; }
 
 .innerStuff {
-  margin: auto 10px;
-}
+  margin: auto 10px; }
 
 .right {
-  text-align: right;
-}
+  text-align: right; }
 
 .section {
   margin: 50px 0;
-  text-align: center;
-}
+  text-align: center; }
 
+.wet-background {
+  height: 100vh;
+  background-image: url(../images/wet.jpeg);
+  background-size: cover;
+  background-repeat: no-repeat; }
+
+/*# sourceMappingURL=style.css.map */
 
 /*# sourceMappingURL=style.css.map */
