@@ -37,11 +37,26 @@ body {
   text-align: center;
 }
 
+.italic {
+  font-style: italic;
+}
+
+.front-main-main {
+  padding: 3em 0 2em 4em;
+}
+
+.p2 {
+  text-align: center;
+  margin: 3em auto;
+}
+
 .wet-background {
-  // height: 100vh;
-  // background-image: url(../images/wet.jpeg);
-  // background-size: cover;
-  // background-repeat: no-repeat;
+  background-image: url(../images/wet.jpeg);
+  background-size: cover;
+  background-repeat: no-repeat;
+  color: white;
+  height: 90vh;
+  margin: 0;
 }
 
 /*# sourceMappingURL=style.css.map */
