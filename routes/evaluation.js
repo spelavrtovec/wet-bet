@@ -12,8 +12,6 @@ require("dotenv").config();
 
 weather.setAPPID(process.env.WEATHER_KEY);
 
-
-
 let makeTodayDate = function() {
   let dateToday = new Date();
   let month = dateToday.getMonth() + 1;
@@ -27,10 +25,6 @@ let makeTodayDate = function() {
   let todayDate = year + "-" + month + "-" + day;
   return {date: todayDate}; //now returns object - can be used directly in queries
 };
-
-
-
-
 
 //hope to return 
 function returnWinners (cityId) { //cityId is a number-type. 
@@ -104,14 +98,6 @@ function returnWinners (cityId) { //cityId is a number-type.
   } //end of returnWinners
 
 }
-
-
-
-
-
-
-
-
 
 // This route will be called once per day at 5PM
 evaluationRoutes.get("/", (req, res, next) => {
