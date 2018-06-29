@@ -6,15 +6,14 @@
   </div>
   <div class="bg-secondary d-inline-block p-1 rounded">
     <span class="text-warning">{{user.weatherPoints}}</span>
-    <span class="text-light">WP</span>
+    <span class="text-light">Weather Points</span>
   </div>
 </div>
-
-
 
 <hr>
 <ul class="ul card mx-2 px-4">
   {{#each user._bets}}
-  <li>{{this._challenge.city}} {{this.temperature}}</li>
+  <li><div>{{this._challenge.city}}</div>
+    <br>{{this.temperature}}</li>
   <hr class="mx-0"> {{/each}}
 </ul>
