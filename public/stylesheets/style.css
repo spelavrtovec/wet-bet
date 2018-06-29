@@ -18,9 +18,6 @@ body {
 .innerStuff {
   margin: auto 10px; }
 
-.mw-form {
-  max-width: 500px; }
-
 .right {
   text-align: right; }
 
@@ -28,7 +25,6 @@ body {
   margin: 50px 0;
   text-align: center; }
 
-<<<<<<< HEAD
 .italic {
   font-style: italic; }
 
@@ -47,8 +43,6 @@ body {
   height: 90vh;
   margin: 0; }
 
-=======
->>>>>>> 74a729fcf4fc90e7c7979980787ad090ab0684cc
 /*# sourceMappingURL=style.css.map */
 
 /*# sourceMappingURL=style.css.map */
