@@ -1,4 +1,3 @@
-
 <div class="bg-light row align-items-baseline rounded justify-content-between px-2">
   <div class="col">
     <h1 class="text-capitalize">{{ user.username }}</h1>
@@ -11,9 +10,28 @@
 </div>
 
 <hr>
-<ul class="ul card mx-2 px-4">
+<h3 class="font-weight-bold">Your bets</h3>
+<div class="justify-content-around w-100 wrap row">
   {{#each user._bets}}
-  <li><div>{{this._challenge.city}}</div>
-    <br>{{this.temperature}}</li>
-  <hr class="mx-0"> {{/each}}
-</ul>
+
+  <div class="my-1 border justify-content-around rounded bg-light col-6">
+    <div class="both-things d-flex justify-content-between ">
+      <div class="d-flex flex-column pl-2">
+          <span class="font-weight-bold justify-content-start">{{this._challenge.city}}</span>
+          <span>{{this._challenge.date}}</span>
+      </div>
+
+      <div class="pr-2 my-auto mid-line-height vertical-align-middle">
+        <div class="text-center">
+          <p class="vertical-align mid-line-height">
+        </div>
+        {{this.temperature}} °C
+        </p>
+      </div>
+
+    </div>
+
+  </div>
+
+  {{/each}}
+</div>
