@@ -66,11 +66,6 @@ betRoutes.post("/day-and-place", (req, res, next) => {
   });
 
 
-  newBet._challenge = newChallenge._id 
-  //effectively adding challenges to our Bet instance (just above)
-  //but isn't the newChallengeId unique? Only one, and i think this refers to the id of the literally "new challenge"
-  //OK, so if it's here saving in the bet only new challenges, I need to later save in bets old challenges
-  newBet.save();
 
   // first query here finds the current user id. Then we push into that users _bets the newBet_id
   // What happens: above, we have but challenges into the bet instance (just above)
@@ -82,20 +77,30 @@ betRoutes.post("/day-and-place", (req, res, next) => {
   })
   .catch(err => console.log("err", err));
   
+  // newBet._challenge = newChallenge._id 
+  //effectively adding challenges to our Bet instance (just above)
+  //but isn't the newChallengeId unique? Only one, and i think this refers to the id of the literally "new challenge"
+  //OK, so if it's here saving in the bet only new challenges, I need to later save in bets old challenges
   
   Challenge
   .findOne({$and: [{"city": city}, {"date": date}] }) //finding the document in challenge collection with the given parameters
   .then( (currentChallenge) => { //using that document -->
     currentChallenge._bets.unshift(newBet) // and putting bets into it, unshifting to the start of the array
+    newBet._challenge = currentChallenge._id
     currentChallenge.save() //then actually saving it to the db
   })
   .catch(() => //if findOne does not find a document with the given queries, we just make a new document
+  
+  
   newChallenge.save()
   .then( (currentChallenge) => { //and do the same stuff as above
     currentChallenge._bets.unshift(newBet)
+    newBet._challenge = currentChallenge._id
     currentChallenge.save()
   })
 ).then(() => {//after all database stuff
+  newBet.save(); //new bet only saved after currentchallange inserted into it
+  
 
   ///////////////////
   //////// THIS IS GOING TO THE EVALUATION
