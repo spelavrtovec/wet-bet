@@ -99,7 +99,7 @@ betRoutes.post("/day-and-place", (req, res, next) => {
 ).then(() => {//after all database stuff
   newBet.save(); //new bet only saved after currentchallange inserted into it
 
-
+//
 
 
   res.redirect(`/betting/${city}/${date}`); //put the redirect inside this otherwise empty then just to make sure it only executed after everything else was finished. Otherwise there were probs with newest bet not showing.
